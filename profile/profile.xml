@@ -1,0 +1,17 @@
+<root>
+	<head>Student Information</head>
+	<student_information>
+	<Name></Name>
+	<Surname></Surname>
+	<Email></Email>
+	<Date_of_birth></Date_of_birth>
+	<Address>
+		<house_number_and_street></house_number_and_street>
+		<area></area>
+		<locality></locality>
+	</Address>
+	<Subaddress></Subaddress>
+	<Owl></Owl>
+	<Date_of_creation></Date_of_creation>
+	</student_information>
+</root>

@@ -1,0 +1,49 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='back.css')}}">
+{% endblock %}
+
+{% block title %}
+Who are you?
+{% endblock %}
+
+{% block content %}
+<div class="container h-100">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/static/ho.png" class="img-rounded center-block">
+        </div>
+    </div>
+    <div class="h-100 justify-content-center align-items-center">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>         
+                        {{ message }}<br>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="{{ url_for('process_login') }}" method="POST" class="col-12">
+            {{ form.hidden_tag() }}
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.username) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.password) }}
+            </div>
+            <div class="text-center">
+                <div class="btn btn-dark">
+                    {{ wtf.form_field(form.submit) }}
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

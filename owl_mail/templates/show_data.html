@@ -1,0 +1,80 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='back.css')}}">
+    <link rel="stylesheet" href="{{url_for('.static', filename='labels.css')}}">
+{% endblock %}
+
+{% block title %}
+Right?
+{% endblock %}
+
+{% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <img src="{{ img }}" class="img-rounded center-block">
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container h-100">
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/static/stamp.png" class="img-rounded center-block">
+        </div>
+    </div>
+    <div class="h-100 justify-content-center align-items-center">  
+        <form action="" method="POST" novalidate class="col-12">
+            {{ form.hidden_tag() }} 
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.name) }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.surname) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.email) }}
+                </div> 
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.date_of_birth) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    {{ wtf.form_field(form.address) }}
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                {{ wtf.form_field(form.subaddress) }}
+            </div>
+            <div class="form-inline">
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.owl) }}
+                <button type="button" class="btn btn-white" data-toggle="modal" data-target="#exampleModal">
+                    <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <br>
+                        <br>
+                        {{ wtf.form_field(form.to_fix) }}
+                        {{ wtf.form_field(form.submit) }}
+                    </div>
+                </div>
+            </div>    
+        </form>
+    </div>
+</div>
+{% endblock %}

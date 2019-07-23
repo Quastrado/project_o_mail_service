@@ -1,0 +1,84 @@
+{% extends "bootstrap/base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block styles %}
+{{super()}}
+    <link rel="stylesheet" href="{{url_for('.static', filename='back.css')}}">
+{% endblock %}
+
+{% block title %}
+What do we write?
+{% endblock %}
+
+{% block content %}
+
+<div class="container h-100"> 
+    <div class="row">
+        <div class="col-md-12">
+            <img src="/static/post_.png" class="img-rounded center-block">
+        </div>
+    </div>
+    <div class="h-100 justify-content-center align-items-center">   
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                        </button>         
+                        {{ message }}<br>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        <form action="" method="POST" novalidate class="col-12">
+            {{ form.hidden_tag() }}
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.name) }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.surname) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.email) }}
+                </div>
+                <div class="form-group col-md-6">
+                    {{ wtf.form_field(form.date_of_birth) }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-md-12">
+                    <div class="form-group col-md-4">
+                        {{ wtf.form_field(form.house_number_and_street) }}
+                    </div>
+                    <div class="form-group col-md-4">
+                        {{ wtf.form_field(form.area) }}
+                    </div>    
+                    <div class="form-group col-md-4">
+                        {{ wtf.form_field(form.locality) }}
+                    </div>
+                </div>
+            </div>
+            <div class="form-group col-md-12">
+                {{ wtf.form_field(form.subaddress) }}
+            </div>
+            <div class="form-group col-md-6">
+                {{ wtf.form_field(form.owl) }}
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="text-center">
+                        {{ wtf.form_field(form.logout) }}
+                        {{ wtf.form_field(form.submit) }}
+                    </div>
+                </div>
+            </div>    
+        </form>
+    </div>
+</div>
+{% endblock %}
+        
+           
