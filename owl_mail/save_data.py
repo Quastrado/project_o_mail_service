@@ -53,11 +53,8 @@ def in_cloud(file_name, bucket, object_name=None):
         aws_secret_access_key = BaseConfig.aws_secret_access_key,
         region_name = BaseConfig.aws_region
         )
-    try:
-        respone = s3.upload_file(file_name, bucket, object_name)
-    except boto3.exceptions:
-        return None 
-
+    respone = s3.upload_file(file_name, bucket, object_name)
+        
 
 def execute_save(c_dict):
     xml = to_xml(c_dict)
@@ -71,7 +68,11 @@ def execute_save(c_dict):
     f_id = db_insert(db_dict)
     f_id = 'profile/{}.xml'.format(str(f_id))
     os.rename(xml, str(f_id))
-    in_cloud(str(f_id), 'quastrdos-first-bucket'):
+    try:
+        in_cloud(str(f_id), 'quastrdos-first-bucket')
+    except (NoCredentialsError, EndpointConnectionError):
+        os.remove(f_id)
+        return None
     db.session.commit()
     os.remove(f_id)
     

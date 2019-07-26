@@ -50,22 +50,27 @@ def form_post():
             return redirect(url_for('logout'))
         elif form.submit.data:
             if form.validate_on_submit():
-                content_dict = { 
-                    'Name':  form.name.data,
-                    'Surname': form.surname.data,
-                    'Email': form.email.data,
-                    'Date_of_birth': form.date_of_birth.data,
-                    'Address': '{}; {}; {}'.format(
-                        form.house_number_and_street.data,
-                        form.area.data,
-                        form.locality.data
-                    ),
-                    'Subaddress': form.subaddress.data,
-                    'Owl': form.owl.data,
-                    'Date_of_creation': ''
-                }
-                session['content'] = content_dict
-                return redirect(url_for('stamp')) 
+                exists = db.session.query(Docs.id).filter(Docs.email == form.email.data).scalar()
+                if exists is not None:
+                    flash('Specified email already exists')
+                    form.email.data = ''
+                else:
+                    content_dict = { 
+                        'Name':  form.name.data,
+                        'Surname': form.surname.data,
+                        'Email': form.email.data,
+                        'Date_of_birth': form.date_of_birth.data,
+                        'Address': '{}; {}; {}'.format(
+                            form.house_number_and_street.data,
+                            form.area.data,
+                            form.locality.data
+                        ),
+                        'Subaddress': form.subaddress.data,
+                        'Owl': form.owl.data,
+                        'Date_of_creation': ''
+                    }
+                    session['content'] = content_dict
+                    return redirect(url_for('stamp')) 
                 
     return render_template('index.html', form=form) #form=form
 
@@ -93,14 +98,11 @@ def stamp():
     if form.to_fix.data:
         return redirect(url_for('form_post'))
     elif form.submit.data:
-        if form.validate_on_submit():
-            exists = db.session.query(Docs.id).filter(Docs.email == form.email.data).scalar()
-            if exists is not None:
-                flash('Specified email alredy exists')
-                return redirect(url_for('form_post'))
-            else:
-                SD.execute_save(c_dict)
+        if form.validate_on_submit():   # check existsing of email must be at form_post route 
+            if SD.execute_save(c_dict) is not None:
                 return redirect(url_for('finish'))
+            else:
+                flash('Something went wrong in working with the s3 service. The document was not saved')
         
     
     return render_template('show_data.html', form=form, img=img)
