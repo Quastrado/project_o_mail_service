@@ -39,11 +39,10 @@ def db_insert(db_dict):
     db.session.add(db_set)
     db.session.flush()
     f_id = db_set.id
-    #db.session.commit()
     return f_id
 
 
-def in_cloud(file_name, bucket, object_name=None):
+def upload_in_cloud(file_name, bucket, object_name=None):
     if object_name is None:
         object_name = file_name
 
@@ -51,9 +50,10 @@ def in_cloud(file_name, bucket, object_name=None):
         's3',
         aws_access_key_id = BaseConfig.aws_access_key_id,
         aws_secret_access_key = BaseConfig.aws_secret_access_key,
-        region_name = BaseConfig.aws_region
+        region_name = BaseConfig.aws_region,
         )
     respone = s3.upload_file(file_name, bucket, object_name)
+    return 'Success'
         
 
 def execute_save(c_dict):
@@ -69,10 +69,10 @@ def execute_save(c_dict):
     f_id = 'profile/{}.xml'.format(str(f_id))
     os.rename(xml, str(f_id))
     try:
-        in_cloud(str(f_id), 'quastrdos-first-bucket')
+        upload_in_cloud(str(f_id), 'quastrdos-first-bucket')
     except (NoCredentialsError, EndpointConnectionError):
         os.remove(f_id)
-        return None
+        raise s3_error('Something went wrong in working with the s3 service. The document was not saved')
     db.session.commit()
     os.remove(f_id)
     

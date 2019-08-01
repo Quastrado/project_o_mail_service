@@ -99,12 +99,12 @@ def stamp():
         return redirect(url_for('form_post'))
     elif form.submit.data:
         if form.validate_on_submit():   # check existsing of email must be at form_post route 
-            if SD.execute_save(c_dict) is not None:
+            try:
+                SD.execute_save(c_dict) 
                 return redirect(url_for('finish'))
-            else:
+            except:
                 flash('Something went wrong in working with the s3 service. The document was not saved')
-        
-    
+                        
     return render_template('show_data.html', form=form, img=img)
     
 
