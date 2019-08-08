@@ -1,11 +1,13 @@
-import boto3
-from botocore.exceptions import NoCredentialsError, EndpointConnectionError
-from config import BaseConfig
+import os
 from datetime import datetime
 from hashlib import md5
-import os
-from owl_mail.models import db, Docs
 from xml.etree import ElementTree as ET
+
+import boto3
+from botocore.exceptions import NoCredentialsError, EndpointConnectionError
+
+from config import BaseConfig
+from owl_mail.models import db, Docs
 
 
 def to_xml(dict_of_data):
@@ -48,13 +50,12 @@ def upload_in_cloud(file_name, bucket, object_name=None):
 
     s3 = boto3.client(
         's3',
-        aws_access_key_id = BaseConfig.aws_access_key_id,
-        aws_secret_access_key = BaseConfig.aws_secret_access_key,
-        region_name = BaseConfig.aws_region,
+        aws_access_key_id = BaseConfig.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key = BaseConfig.AWS_SECRET_ACCESS_KEY,
+        region_name = BaseConfig.AWS_REGION,
         )
     respone = s3.upload_file(file_name, bucket, object_name)
-    return 'Success'
-        
+            
 
 def execute_save(c_dict):
     xml = to_xml(c_dict)
@@ -69,7 +70,7 @@ def execute_save(c_dict):
     f_id = 'profile/{}.xml'.format(str(f_id))
     os.rename(xml, str(f_id))
     try:
-        upload_in_cloud(str(f_id), 'quastrdos-first-bucket')
+        upload_in_cloud(str(f_id), BaseConfig.AWS_BUCKET_NAME)
     except (NoCredentialsError, EndpointConnectionError):
         os.remove(f_id)
         raise s3_error('Something went wrong in working with the s3 service. The document was not saved')

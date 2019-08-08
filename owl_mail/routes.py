@@ -1,16 +1,16 @@
 from datetime import datetime
 from flask import current_app as app
-from flask import flash, redirect, render_template, request, session, url_for 
+from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import login_user, logout_user
 from owl_mail.forms import LoginForm, StudentForm, ContentForm, FinishForm
-from owl_mail.models import db, User, Docs  
+from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
 import owl_mail.save_data as SD
 
 
 @app.route('/')
 def start():
-    return redirect(url_for('login')) # here maust be 'login'
+    return redirect(url_for('login'))  # here maust be 'login'
 
 
 @app.route('/login')
@@ -21,7 +21,7 @@ def login():
 
 
 @app.route('/process-login', methods=['POST'])
-def process_login(): # need import User, db / redirect, flash, url_for ???
+def process_login():  # need import User, db / redirect, flash, url_for ???
     form = LoginForm()
     print(form.validate_on_submit())
     if form.validate_on_submit():
@@ -29,22 +29,26 @@ def process_login(): # need import User, db / redirect, flash, url_for ???
         if user and user.check_password(form.password.data):
             login_user(user)
             flash('You successfully logged in')
-            return redirect(url_for('form_post'))
+            return redirect(url_for('menu'))
 
     flash('Invalid username or password')
     return redirect(url_for('login'))
 
 
 @app.route('/logout')
-def logout(): # need import flash, redirect, url_for / logout_user
+def logout():  # need import flash, redirect, url_for / logout_user
     logout_user()
-    return redirect(url_for('login'))    
+    return redirect(url_for('login'))
 
+
+@app.route('/menu')
+def menu():
+    return render_template('menu.html')
 
 @app.route('/form_post', methods=['GET', 'POST'])
 def form_post():
     form = StudentForm()
-    
+
     if request.method == 'POST':
         if form.logout.data:
             return redirect(url_for('logout'))
@@ -55,7 +59,7 @@ def form_post():
                     flash('Specified email already exists')
                     form.email.data = ''
                 else:
-                    content_dict = { 
+                    content_dict = {
                         'Name':  form.name.data,
                         'Surname': form.surname.data,
                         'Email': form.email.data,
@@ -70,9 +74,9 @@ def form_post():
                         'Date_of_creation': ''
                     }
                     session['content'] = content_dict
-                    return redirect(url_for('stamp')) 
-                
-    return render_template('index.html', form=form) #form=form
+                    return redirect(url_for('stamp'))
+
+    return render_template('index.html', form=form)  # form=form
 
 
 @app.route('/stamp', methods=['GET', 'POST'])
@@ -85,7 +89,7 @@ def stamp():
         'Barn Owl': '/static/barn-owl.jpg',
         'Tawny Owl': '/static/tawny-owl.jpg'
     }
-        
+
     form.name.data = c_dict['Name']
     form.surname.data = c_dict['Surname']
     form.email.data = c_dict['Email']
@@ -98,22 +102,25 @@ def stamp():
     if form.to_fix.data:
         return redirect(url_for('form_post'))
     elif form.submit.data:
-        if form.validate_on_submit():   # check existsing of email must be at form_post route 
+        if form.validate_on_submit():
             try:
-                SD.execute_save(c_dict) 
+                SD.execute_save(c_dict)
                 return redirect(url_for('finish'))
-            except:
-                flash('Something went wrong in working with the s3 service. The document was not saved')
-                        
+            except Exception:
+                flash(
+                    'Something went wrong in working with the s3 service.'
+                    'The document was not saved'
+                    )
+
     return render_template('show_data.html', form=form, img=img)
-    
+
 
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
     form = FinishForm()
-    if form.write_another_entry.data: 
+    if form.write_another_entry.data:
         return redirect(url_for('form_post'))
     elif form.logout.data:
         return redirect(url_for('logout'))
-    
+
     return render_template('finish.html', form=form)
