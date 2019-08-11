@@ -12,7 +12,7 @@ def app():
 
 
 def test_app(client):
-    response = client.get('/login')
+    response = client.get('/menu')
     assert response.status_code == 200
 
 
