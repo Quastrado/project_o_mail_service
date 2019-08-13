@@ -20,7 +20,7 @@ def to_xml(dict_of_data):
         for tag in root.iter(key):
             tag.text = dict_of_data[key]
 
-    xml_file = 'profile/{}_{}.xml'.format(root[1][0].text, root[1][1].text)
+    xml_file = '{}_{}.xml'.format(root[1][0].text, root[1][1].text)
     tree.write(xml_file)
     return xml_file
 
@@ -67,7 +67,7 @@ def execute_save(c_dict):
         'Date_of_creation': c_dict['Date_of_creation']
         }
     f_id = db_insert(db_dict)
-    f_id = 'profile/{}.xml'.format(str(f_id))
+    f_id = '{}.xml'.format(str(f_id))
     os.rename(xml, str(f_id))
     try:
         upload_in_cloud(str(f_id), BaseConfig.AWS_BUCKET_NAME)

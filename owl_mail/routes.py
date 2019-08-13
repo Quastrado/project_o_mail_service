@@ -1,13 +1,10 @@
 from datetime import datetime
 
-import boto3
-
 from flask import current_app as app
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import login_user, logout_user
 
-import owl_mail.check as C
-from config import BaseConfig
+from owl_mail.check import s3_files 
 
 from owl_mail.forms import LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
@@ -35,7 +32,6 @@ def process_login():  # need import User, db / redirect, flash, url_for ???
         user = User.query.filter(User.username == form.username.data).first()
         if user and user.check_password(form.password.data):
             login_user(user)
-            flash('You successfully logged in')
             return redirect(url_for('menu'))
 
     flash('Invalid username or password')
@@ -135,14 +131,6 @@ def finish():
 
 @app.route('/check', methods=['GET', 'POST'])
 def check():
-    s3 = boto3.client(
-        's3',
-        aws_access_key_id = BaseConfig.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key = BaseConfig.AWS_SECRET_ACCESS_KEY,
-        region_name = BaseConfig.AWS_REGION,
-        )
-    
-    files = s3.list_objects(Bucket = BaseConfig.AWS_BUCKET_NAME)['Contents']
-       
+    files = s3_files()
     return render_template('check.html', files = files)
 
