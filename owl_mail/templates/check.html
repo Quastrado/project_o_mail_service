@@ -16,14 +16,16 @@ tbody tr:nth-child(odd) {
   background: black;
 }
 .table-wrapper {
-    max-height: 390px;
+    max-height: 376px;
     overflow:auto;
     }
 .table-wrapper thead th {
-    background-color: black;
+    background-color: #3b1226;
     position: sticky;
     top: 0;
 }
+tbody td label {vertical-align: middle;}
+tbody td input {width: 12px; height: 12px;}
 </style>
 {% endblock %}
 
@@ -50,15 +52,20 @@ Something wrong?
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">FIle</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Date of creation</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for f in files %}
                         <tr>
                             <td>
+                                <label class="custom-control-input">{{ loop.index }}</label>
                                 <input type="checkbox" class="custom-control-input">
                             </td>
-                            <td>{{ f['Key'] }}</td>
+                            <td>{{ f.id }}</td>
+                            <td>{{ f.name }}</td>
+                            <td>{{ f.date_of_creation }}
                         </tr>
                         {% endfor %}
                     </tbody>

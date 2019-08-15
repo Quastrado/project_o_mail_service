@@ -27,7 +27,6 @@ def login():
 @app.route('/process-login', methods=['POST'])
 def process_login():  # need import User, db / redirect, flash, url_for ???
     form = LoginForm()
-    print(form.validate_on_submit())
     if form.validate_on_submit():
         user = User.query.filter(User.username == form.username.data).first()
         if user and user.check_password(form.password.data):
@@ -121,8 +120,8 @@ def stamp():
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
     form = FinishForm()
-    if form.write_another_entry.data:
-        return redirect(url_for('form_post'))
+    if form.menu.data:
+        return redirect(url_for('menu'))
     elif form.logout.data:
         return redirect(url_for('logout'))
 
@@ -131,6 +130,7 @@ def finish():
 
 @app.route('/check', methods=['GET', 'POST'])
 def check():
-    files = s3_files()
+    files = Docs.query.all()
+
     return render_template('check.html', files = files)
 

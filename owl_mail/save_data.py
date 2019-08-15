@@ -11,9 +11,9 @@ from owl_mail.models import db, Docs
 
 
 def to_xml(dict_of_data):
-    
-    dict_of_data['Date_of_creation'] = datetime.now().strftime("%d/%m/%Y")
-    
+    today = datetime.now().strftime('%d-%m-%Y')
+    dict_of_data['Date_of_creation'] = today
+    print(dict_of_data['Date_of_creation'])
     tree = ET.parse('profile/profile.xml')
     root = tree.getroot()
     for key in dict_of_data.keys():

@@ -9,13 +9,13 @@ class LoginForm(FlaskForm):
 
 class StudentForm(FlaskForm):
     name = StringField('', validators=[DataRequired()], render_kw={'placeholder':'Name'})
-    surname = StringField('', validators=[DataRequired()], render_kw={'placeholder':'Surname'})
+    surname = StringField('', render_kw={'placeholder':'Surname'})
     email = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'Email'})
     date_of_birth = DateField('', format='%Y/%m/%d', validators=[DataRequired()], render_kw={'placeholder': '0000/00/00'})
     house_number_and_street = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'house number and street'})
     area = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'area'})
     locality = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'locality'})
-    subaddress = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'Subaddress'})
+    subaddress = StringField('', render_kw={'placeholder': 'Subaddress'})
     owl = SelectField('', choices=[
         ('Eared Owl', 'eared owl'),
         ('White Owl', 'white owl'),
@@ -40,5 +40,5 @@ class ContentForm(FlaskForm):
     submit = SubmitField('Subscribe')
     
 class FinishForm(FlaskForm):
-    write_another_entry = SubmitField('Write another entry', render_kw={"class": "btn btn-light"})
+    menu = SubmitField('Menu', render_kw={"class": "btn btn-light"})
     logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})

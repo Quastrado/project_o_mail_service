@@ -25,7 +25,7 @@ class Docs(db.Model):
     name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
     file_hash = db.Column(db.String)
-    date_of_creation = db.Column(db.DateTime)
+    date_of_creation = db.Column(db.String)
 
     def __init__(self, name, email, file_hash, date_of_creation):
         self.name = name

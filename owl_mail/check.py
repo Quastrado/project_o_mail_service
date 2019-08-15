@@ -1,3 +1,4 @@
+from xml.etree import ElementTree as ET
 import boto3
 from config import BaseConfig
 
@@ -10,4 +11,9 @@ def s3_files():
         )
     
     files = s3.list_objects(Bucket = BaseConfig.AWS_BUCKET_NAME)['Contents']
+    
+    for key in files:
+        tree = ET.parse(key)
+        root = tree.getroot() 
+    
     return files
