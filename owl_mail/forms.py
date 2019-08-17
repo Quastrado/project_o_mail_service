@@ -11,7 +11,7 @@ class StudentForm(FlaskForm):
     name = StringField('', validators=[DataRequired()], render_kw={'placeholder':'Name'})
     surname = StringField('', render_kw={'placeholder':'Surname'})
     email = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'Email'})
-    date_of_birth = DateField('', format='%Y/%m/%d', validators=[DataRequired()], render_kw={'placeholder': '0000/00/00'})
+    date_of_birth = DateField('', format='%Y-%m-%d', validators=[DataRequired()], render_kw={'placeholder': '0000/00/00'})
     house_number_and_street = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'house number and street'})
     area = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'area'})
     locality = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'locality'})

@@ -4,7 +4,7 @@ from flask import current_app as app
 from flask import flash, redirect, render_template, request, session, url_for
 from flask_login import login_user, logout_user
 
-from owl_mail.check import s3_files 
+from owl_mail.check import files_count_discrepancy, file_names_discrepancy
 
 from owl_mail.forms import LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
@@ -131,6 +131,14 @@ def finish():
 @app.route('/check', methods=['GET', 'POST'])
 def check():
     files = Docs.query.all()
-
+    if files_count_discrepancy() == True or file_names_discrepancy() == True:
+        message = """
+            Data Security at Risk. 
+            Information about the number of files is not reliable. 
+            Or the names do not matched
+            """
+        flash(message)
+        print(files_count_discrepancy(), file_names_discrepancy())
+        
     return render_template('check.html', files = files)
 
