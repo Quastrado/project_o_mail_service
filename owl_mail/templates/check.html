@@ -59,6 +59,8 @@ Something wrong?
             <hr>
             <form action="" method="GET">    
                 <div class="table-wrapper">
+                <input class="form-control" id="Input" type="text" placeholder="Search">
+                <br>
                 <table class="table table-bordered table-dark">
                     <thead>
                         <tr>
@@ -68,7 +70,7 @@ Something wrong?
                             <th scope="col">Date of creation</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="Table">
                         {% for f in files %}
                         <tr>
                             <td>
@@ -90,4 +92,18 @@ Something wrong?
 
 <script src="/static/jquery-3.4.1.min.js"></script>
 <script src="/static/bootstrap.min.js"></script>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<script>
+        &(document).ready(function(){
+            $("#Input").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("Table tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+</script>
 {% endblock %}

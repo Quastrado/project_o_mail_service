@@ -30,7 +30,5 @@ def files_count_discrepancy():
 def file_names_discrepancy():
     id_list = [str(r) for r, in db.session.query(Docs.id).all()]
     file_names = [el.split('.')[0] for el in bucket_content_list()]
-    print(set(id_list))
-    print(set(file_names))
     if set(id_list) != set(file_names):
         return True

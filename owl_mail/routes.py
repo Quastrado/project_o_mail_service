@@ -137,8 +137,7 @@ def check():
             Information about the number of files is not reliable. 
             Or the names do not matched
             """
-        flash(message)
-        print(files_count_discrepancy(), file_names_discrepancy())
+        flash(message)        
         
     return render_template('check.html', files = files)
 
