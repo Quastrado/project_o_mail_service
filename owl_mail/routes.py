@@ -130,7 +130,12 @@ def finish():
 
 @app.route('/check', methods=['GET', 'POST'])
 def check():
-    files = Docs.query.all()
+    id_list = [str(val) for val, in db.session.query(Docs.id).all()]
+    name_list = [val for val, in db.session.query(Docs.name).all()]
+    date_of_creation_list = [val.strftime('%d-%m-%Y') for val, in 
+                            db.session.query(Docs.date_of_creation)]
+    count = db.session.query(Docs).count()
+    
     if files_count_discrepancy() == True or file_names_discrepancy() == True:
         message = """
             Data Security at Risk. 
@@ -139,5 +144,8 @@ def check():
             """
         flash(message)        
         
-    return render_template('check.html', files = files)
+    return render_template('check.html', id_list = id_list,
+                                        name_list = name_list,
+                                        date_of_creation_list = date_of_creation_list,
+                                        count = count)
 

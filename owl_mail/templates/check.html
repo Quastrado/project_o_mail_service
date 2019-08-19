@@ -3,6 +3,7 @@
 
 {% block styles %}
 {{super()}}
+<style src ="{{ url_for('static', filename='bootstrap.min.css') }}"></style>
 <style>
 body {
     background-color: #212529;
@@ -61,7 +62,7 @@ Something wrong?
                 <div class="table-wrapper">
                 <input class="form-control" id="Input" type="text" placeholder="Search">
                 <br>
-                <table class="table table-bordered table-dark">
+                <table class="table table-bordered table-dark" id="DocsTable">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -70,16 +71,16 @@ Something wrong?
                             <th scope="col">Date of creation</th>
                         </tr>
                     </thead>
-                    <tbody id="Table">
-                        {% for f in files %}
+                    <tbody id="DocsTable">
+                        {% for i in range(0, count) %}
                         <tr>
                             <td>
                                 <label class="custom-control-input">{{ loop.index }}</label>
                                 <input type="checkbox" class="custom-control-input">
                             </td>
-                            <td>{{ f.id }}</td>
-                            <td>{{ f.name }}</td>
-                            <td>{{ f.date_of_creation }}
+                            <td>{{ id_list[i] }}</td>
+                            <td>{{ name_list[i] }}</td>
+                            <td>{{ date_of_creation_list[i] }}</td>
                         </tr>
                         {% endfor %}
                     </tbody>
@@ -92,18 +93,15 @@ Something wrong?
 
 <script src="/static/jquery-3.4.1.min.js"></script>
 <script src="/static/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function(){
+      $("#Input").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#DocsTable tr").filter(function() {
+          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+      });
+    });
+    </script>
 {% endblock %}
 
-{% block scripts %}
-{{ super() }}
-<script>
-        &(document).ready(function(){
-            $("#Input").on("keyup", function() {
-                var value = $(this).val().toLowerCase();
-                $("Table tr").filter(function() {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-</script>
-{% endblock %}
