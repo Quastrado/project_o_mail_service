@@ -3,7 +3,7 @@
 
 {% block styles %}
 {{super()}}
-<style src ="{{ url_for('static', filename='bootstrap.min.css') }}"></style>
+<style src ="{{ url_for('static', filename='css/bootstrap.min.css') }}"></style>
 <style>
 body {
     background-color: #212529;
@@ -62,7 +62,7 @@ Something wrong?
                 <div class="table-wrapper">
                 <input class="form-control" id="Input" type="text" placeholder="Search">
                 <br>
-                <table class="table table-bordered table-dark" id="DocsTable">
+                <table class="table table-bordered table-dark">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -91,8 +91,8 @@ Something wrong?
     </div>
 </div> 
 
-<script src="/static/jquery-3.4.1.min.js"></script>
-<script src="/static/bootstrap.min.js"></script>
+<script src="/static/js/jquery-3.4.1.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
 <script>
     $(document).ready(function(){
       $("#Input").on("keyup", function() {
