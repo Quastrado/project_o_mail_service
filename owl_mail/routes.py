@@ -52,8 +52,8 @@ def form_post():
     form = StudentForm()
 
     if request.method == 'POST':
-        if form.logout.data:
-            return redirect(url_for('logout'))
+        if form.menu.data:
+            return redirect(url_for('menu'))
         elif form.submit.data:
             if form.validate_on_submit():
                 exists = db.session.query(Docs.id).filter(Docs.email == form.email.data).scalar()

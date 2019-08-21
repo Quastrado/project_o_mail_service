@@ -24,7 +24,7 @@ class StudentForm(FlaskForm):
         ],
         validators=[DataRequired()]
         )
-    logout = SubmitField('Logout')
+    menu = SubmitField('Menu')
     submit = SubmitField('Submit')
     
 
