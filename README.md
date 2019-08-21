@@ -5,6 +5,8 @@ This is a simple web application for a staff member at Hogwarts School. It allow
 # Technologies
 
 - python 3.6.8
+- Flask
+- SQLAlchemy
 - bootstrap 4
 - PostgreSQL 11.4
 - Amazon S3 - AWS
