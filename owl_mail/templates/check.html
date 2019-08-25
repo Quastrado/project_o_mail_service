@@ -26,7 +26,12 @@ tbody tr:nth-child(odd) {
     top: 0;
 }
 tbody td label {vertical-align: middle;}
-tbody td input {width: 12px; height: 12px;}
+tbody td input {
+    width: 12px; 
+    height: 12px;
+    background-color: rgba(0,0,0,0) !important;
+    border: none !important;
+    }
 </style>
 {% endblock %}
 
@@ -59,6 +64,7 @@ Something wrong?
             <h3>Documents</h3>
             <hr>
             <form action="" method="GET">    
+            
                 <div class="table-wrapper">
                 <input class="form-control" id="Input" type="text" placeholder="Search">
                 <br>
@@ -76,9 +82,9 @@ Something wrong?
                         <tr>
                             <td>
                                 <label class="custom-control-input">{{ loop.index }}</label>
-                                <input type="checkbox" class="custom-control-input">
+                                {{ form.checkbox }}
                             </td>
-                            <td>{{ id_list[i] }}</td>
+                            <td>{{ form.file_name(value=id_list[i]) }}</td>
                             <td>{{ name_list[i] }}</td>
                             <td>{{ date_of_creation_list[i] }}</td>
                         </tr>
@@ -102,6 +108,6 @@ Something wrong?
         });
       });
     });
-    </script>
+</script>
 {% endblock %}
 

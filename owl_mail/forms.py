@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, PasswordField, DateField, SubmitField
+from wtforms import BooleanField, StringField, SelectField, PasswordField, DateField, SubmitField
 from wtforms.validators import DataRequired
 
 class LoginForm(FlaskForm):
@@ -42,3 +42,7 @@ class ContentForm(FlaskForm):
 class FinishForm(FlaskForm):
     menu = SubmitField('Menu', render_kw={"class": "btn btn-light"})
     logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})
+
+class CheckForm(FlaskForm):
+    checkbox = BooleanField(validators=[DataRequired()])
+    file_name = StringField(validators=[DataRequired()])

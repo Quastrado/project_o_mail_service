@@ -6,7 +6,7 @@ from flask_login import login_user, logout_user
 
 from owl_mail.check import files_count_discrepancy, file_names_discrepancy
 
-from owl_mail.forms import LoginForm, StudentForm, ContentForm, FinishForm
+from owl_mail.forms import CheckForm, LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
 import owl_mail.save_data as SD
@@ -130,6 +130,7 @@ def finish():
 
 @app.route('/check', methods=['GET', 'POST'])
 def check():
+    form = CheckForm()    
     id_list = [str(val) for val, in db.session.query(Docs.id).all()]
     name_list = [val for val, in db.session.query(Docs.name).all()]
     date_of_creation_list = [val.strftime('%d-%m-%Y') for val, in 
@@ -144,7 +145,8 @@ def check():
             """
         flash(message)        
         
-    return render_template('check.html', id_list = id_list,
+    return render_template('check.html', form = form, 
+                                        id_list = id_list,
                                         name_list = name_list,
                                         date_of_creation_list = date_of_creation_list,
                                         count = count)
