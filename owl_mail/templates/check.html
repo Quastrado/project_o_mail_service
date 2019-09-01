@@ -63,7 +63,7 @@ Something wrong?
         <div class="col-md-12">
             <h3>Documents</h3>
             <hr>
-            <form action="" method="GET">    
+            <form action="" method="POST">    
             
                 <div class="table-wrapper">
                 <input class="form-control" id="Input" type="text" placeholder="Search">
@@ -82,9 +82,11 @@ Something wrong?
                         <tr>
                             <td>
                                 <label class="custom-control-input">{{ loop.index }}</label>
-                                {{ form.checkbox }}
+                                <input type="checkbox" class="form-control" id="checkbox">
                             </td>
-                            <td>{{ form.file_name(value=id_list[i]) }}</td>
+                            <td>
+                                <input type="text" class="form-control" id="fileName" value="{{ id_list[i] }}"> 
+                            </td>
                             <td>{{ name_list[i] }}</td>
                             <td>{{ date_of_creation_list[i] }}</td>
                         </tr>
@@ -92,6 +94,8 @@ Something wrong?
                     </tbody>
                 </table>
                 </div>
+                {{ form.submit }}
+            <button type="submit" class="btn btn-default">Submit</button>
             </form>
         </div>
     </div>
@@ -109,5 +113,20 @@ Something wrong?
       });
     });
 </script>
+<script>
+    $(document).ready(function() {
+        $('form').on('submit', function(event) {
+            $.ajax({
+                data: {
+                checkbox : $('#checkbox').val(),
+                fileName : $('#fileName').val(),
+                    },
+                type: 'POST',
+                url: '/checkProcess'
+                })
+            .done(function(data) {
+            });
+        });
+    });
 {% endblock %}
 

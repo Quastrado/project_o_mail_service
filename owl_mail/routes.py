@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from flask import current_app as app
-from flask import flash, redirect, render_template, request, session, url_for
+from flask import flash, redirect, render_template, request, jsonify, session, url_for
 from flask_login import login_user, logout_user
 
 from owl_mail.check import files_count_discrepancy, file_names_discrepancy
@@ -143,11 +143,20 @@ def check():
             Information about the number of files is not reliable. 
             Or the names do not matched
             """
-        flash(message)        
-        
+        flash(message)
+
     return render_template('check.html', form = form, 
                                         id_list = id_list,
                                         name_list = name_list,
                                         date_of_creation_list = date_of_creation_list,
                                         count = count)
 
+
+@app.route('/checkProcess', methods= ['POST'])
+def check_process():
+    checkbox = request.json
+    file_name = request.form('fileName')
+    if checkbox and file_name:
+        return print(checkbox, file_name)
+    else:
+        return print('something wrong!')
