@@ -137,26 +137,27 @@ def check():
                             db.session.query(Docs.date_of_creation)]
     count = db.session.query(Docs).count()
     
-    if files_count_discrepancy() == True or file_names_discrepancy() == True:
-        message = """
-            Data Security at Risk. 
-            Information about the number of files is not reliable. 
-            Or the names do not matched
-            """
-        flash(message)
+    try:
+        if files_count_discrepancy() == True or file_names_discrepancy() == True:
+            message = """
+                Data Security at Risk. 
+                Information about the number of files is not reliable. 
+                Or the names do not matched
+                """
+            flash(message)
+    except Exception:
+        flash("""
+            Something went wrong in working with the s3 service.
+            Failed to get information about stored files
+            """)
+    
+    if request.method == 'POST':
+        # file_name = request.form['fileName']
+        print(request.form)
+        #return redirect(url_for('check'))
 
     return render_template('check.html', form = form, 
                                         id_list = id_list,
                                         name_list = name_list,
                                         date_of_creation_list = date_of_creation_list,
                                         count = count)
-
-
-@app.route('/checkProcess', methods= ['POST'])
-def check_process():
-    checkbox = request.json
-    file_name = request.form('fileName')
-    if checkbox and file_name:
-        return print(checkbox, file_name)
-    else:
-        return print('something wrong!')

@@ -1,4 +1,5 @@
 import boto3
+from botocore.exceptions import NoCredentialsError, EndpointConnectionError
 from config import BaseConfig
 from owl_mail.models import db, Docs
 
@@ -10,7 +11,13 @@ s3 = boto3.client(
         )
 
 def bucket_content_list():
-    files = s3.list_objects(Bucket = BaseConfig.AWS_BUCKET_NAME)
+    try:
+        files = s3.list_objects(Bucket = BaseConfig.AWS_BUCKET_NAME)
+    except (NoCredentialsError, EndpointConnectionError):
+         raise s3_error("""
+                        Something went wrong in working with the s3 service.
+                        Failed to get information about stored files
+                        """)    
 
     try:
         contents = files['Contents']

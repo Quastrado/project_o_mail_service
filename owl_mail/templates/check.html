@@ -63,7 +63,7 @@ Something wrong?
         <div class="col-md-12">
             <h3>Documents</h3>
             <hr>
-            <form action="" method="POST">    
+            <form id="form-id" action="" method="POST">    
             
                 <div class="table-wrapper">
                 <input class="form-control" id="Input" type="text" placeholder="Search">
@@ -85,7 +85,7 @@ Something wrong?
                                 <input type="checkbox" class="form-control" id="checkbox">
                             </td>
                             <td>
-                                <input type="text" class="form-control" id="fileName" value="{{ id_list[i] }}"> 
+                                <input type="text" class="form-control" name="fileName" id="fileName{{ id_list[i] }}" value="{{ id_list[i] }}"> 
                             </td>
                             <td>{{ name_list[i] }}</td>
                             <td>{{ date_of_creation_list[i] }}</td>
@@ -95,7 +95,7 @@ Something wrong?
                 </table>
                 </div>
                 {{ form.submit }}
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="button" class="btn btn-default" id="send">Submit</button>
             </form>
         </div>
     </div>
@@ -114,19 +114,29 @@ Something wrong?
     });
 </script>
 <script>
-    $(document).ready(function() {
-        $('form').on('submit', function(event) {
+    $(document).ready(function(){
+        var fname;
+        $("#send").click(function(){
+            var checked = $("input[type=checkbox]:checked");
+            var resultArray = [];
+            for(v of checked){
+                console.log(v)
+                var next_input = $(v).closest("tr");
+                next_input = next_input.find("input[type=text]")
+
+                resultArray.push(next_input.val())
+            }
+
             $.ajax({
-                data: {
-                checkbox : $('#checkbox').val(),
-                fileName : $('#fileName').val(),
-                    },
                 type: 'POST',
-                url: '/checkProcess'
-                })
-            .done(function(data) {
+                url: "/check",
+                data: {'data': resultArray},
+                success: function(response) {
+                    console.log(response);
+                },
             });
         });
     });
+</script>
 {% endblock %}
 
