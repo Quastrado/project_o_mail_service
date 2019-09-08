@@ -82,10 +82,10 @@ Something wrong?
                         <tr>
                             <td>
                                 <label class="custom-control-input">{{ loop.index }}</label>
-                                <input type="checkbox" class="form-control" id="checkbox">
+                                {{ form.checkbox(type="checkbox", id="checkbox") }}                                
                             </td>
                             <td>
-                                <input type="text" class="form-control" name="fileName" id="fileName{{ id_list[i] }}" value="{{ id_list[i] }}"> 
+                                {{ form.file_name(type="text", id="fileName_id_list[i]", value=id_list[i]) }}                                 
                             </td>
                             <td>{{ name_list[i] }}</td>
                             <td>{{ date_of_creation_list[i] }}</td>

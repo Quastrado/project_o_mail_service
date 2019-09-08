@@ -153,7 +153,7 @@ def check():
     
     if request.method == 'POST':
         # file_name = request.form['fileName']
-        print(request.form)
+        print(request.form.getlist('data[]'))
         #return redirect(url_for('check'))
 
     return render_template('check.html', form = form, 

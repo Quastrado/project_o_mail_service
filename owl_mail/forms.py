@@ -45,10 +45,6 @@ class FinishForm(FlaskForm):
     logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})
 
 
-class CheckSubForm(Form):
+class CheckForm(FlaskForm):
     checkbox = BooleanField()
     file_name = StringField(validators=[DataRequired()], render_kw={'readonly': True})
-
-
-class CheckForm(FlaskForm):
-    fl = FieldList(FormField(CheckSubForm))
