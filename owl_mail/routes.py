@@ -154,8 +154,8 @@ def check():
     
     if request.method == 'POST':
         values_list = request.form.getlist('data[]')
-        print(inst_check.hash_caompare(values_list))
-        #return redirect(url_for('check'))
+        files = inst_check.hash_compare(values_list)
+        return jsonify(files)
 
     return render_template('check.html', form = form, 
                                         id_list = id_list,

@@ -40,6 +40,17 @@ Something wrong?
 {% endblock %}
 
 {% block content %}
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <!-- should be added -->
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div class="container h-100">
     <div class="row">
         <div class="col-md-12">
@@ -132,6 +143,7 @@ Something wrong?
                 url: "/check",
                 data: {'data': resultArray},
                 success: function(response) {
+                    // accept json, display modal
                     console.log(response);
                 },
             });
