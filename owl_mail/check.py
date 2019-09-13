@@ -41,7 +41,7 @@ class Check:
             return True
 
 
-    def hash_caompare(self, values_list):
+    def hash_compare(self, values_list):
         discrepancies = []
         for value in values_list:
             file_name = '{}.xml'.format(value)
@@ -54,4 +54,5 @@ class Check:
             db_md5 = record.file_hash
             if s3_file_md5 != db_md5:
                 discrepancies.append(file_name)
+        
         return discrepancies
