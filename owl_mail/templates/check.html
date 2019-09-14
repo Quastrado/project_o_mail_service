@@ -3,37 +3,46 @@
 
 {% block styles %}
 {{super()}}
-<style src ="{{ url_for('static', filename='css/bootstrap.min.css') }}"></style>
+<style src="{{ url_for('static', filename='css/bootstrap.min.css') }}"></style>
 <style>
-body {
-    background-color: #212529;
-    color: white;
-}
-table {
-    background-color: #212529 !important;
-    color: white !important;
-}
-tbody tr:nth-child(odd) {
-  background: black;
-}
-.modal-content {
-    background-color: #212529 !important;
-}
-.table-wrapper {
-    max-height: 376px;
-    overflow:auto;
+    body {
+        background-color: #212529;
+        color: white;
     }
-.table-wrapper thead th {
-    background-color: #3b1226;
-    position: sticky;
-    top: 0;
-}
-tbody td label {vertical-align: middle;}
-tbody td input {
-    width: 12px; 
-    height: 12px;
-    background-color: rgba(0,0,0,0) !important;
-    border: none !important;
+
+    table {
+        background-color: #212529 !important;
+        color: white !important;
+    }
+
+    tbody tr:nth-child(odd) {
+        background: black;
+    }
+
+    .modal-content {
+        background-color: #212529 !important;
+    }
+
+    .table-wrapper {
+        max-height: 376px;
+        overflow: auto;
+    }
+
+    .table-wrapper thead th {
+        background-color: #3b1226;
+        position: sticky;
+        top: 0;
+    }
+
+    tbody td label {
+        vertical-align: middle;
+    }
+
+    tbody td input {
+        width: 12px;
+        height: 12px;
+        background-color: rgba(0, 0, 0, 0) !important;
+        border: none !important;
     }
 </style>
 {% endblock %}
@@ -44,33 +53,35 @@ Something wrong?
 
 {% block content %}
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="modalLabel">Result</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button> 
-        </div>
-        <div class="modal-body">
-            <div id="dataIsSafe">
-                <p>No Authentication Violations</p>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalLabel">Result</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <div id="dataAtRisk">
-                <ul>
-                {% for element in response %}
-                <li>{{ element }}</li>>
-                {% endfor %}
-                </ul>
+            <div class="modal-body" id="mBody">
+                <div id="dataIsSafe" class="hidden">
+                    <p>No Authentication Violations</p>
+                </div>
+                <div id="dataAtRisk" class="hidden">
+                    <p>Violations of authenticity in the following documents:</p>
+                    <ul>
+                        {% for element in response %}
+                        <li>{{ element }}</li>>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>>
-        </div>
-      </div>
     </div>
-  </div>
+</div>
 
 <div class="container h-100">
     <div class="row">
@@ -81,77 +92,77 @@ Something wrong?
     </div>
     <div class="row">
         {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-info alert-danger" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span>
-                        </button>         
-                        {{ message }}<br>
-                    </div>
-                {% endfor %}
-            {% endif %}
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-info alert-danger" role="alert">
+            <button type="button" class="close" data-dismiss="alert">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            {{ message }}<br>
+        </div>
+        {% endfor %}
+        {% endif %}
         {% endwith %}
         <div class="col-md-12">
             <h3>Documents</h3>
             <hr>
-            <form id="form-id" action="" method="POST">    
-            
+            <form id="form-id" action="" method="POST">
+
                 <div class="table-wrapper">
-                <input class="form-control" id="Input" type="text" placeholder="Search">
-                <br>
-                <table class="table table-bordered table-dark">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">FIle</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Date of creation</th>
-                        </tr>
-                    </thead>
-                    <tbody id="DocsTable">
-                        {% for i in range(0, count) %}
-                        <tr>
-                            <td>
-                                <label class="custom-control-input">{{ loop.index }}</label>
-                                {{ form.checkbox(type="checkbox", id="checkbox") }}                                
-                            </td>
-                            <td>
-                                {{ form.file_name(type="text", id="fileName_id_list[i]", value=id_list[i]) }}                                 
-                            </td>
-                            <td>{{ name_list[i] }}</td>
-                            <td>{{ date_of_creation_list[i] }}</td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+                    <input class="form-control" id="Input" type="text" placeholder="Search">
+                    <br>
+                    <table class="table table-bordered table-dark">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">FIle</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Date of creation</th>
+                            </tr>
+                        </thead>
+                        <tbody id="DocsTable">
+                            {% for i in range(0, count) %}
+                            <tr>
+                                <td>
+                                    <label class="custom-control-input">{{ loop.index }}</label>
+                                    {{ form.checkbox(type="checkbox", id="checkbox") }}
+                                </td>
+                                <td>
+                                    {{ form.file_name(type="text", id="fileName_id_list[i]", value=id_list[i]) }}
+                                </td>
+                                <td>{{ name_list[i] }}</td>
+                                <td>{{ date_of_creation_list[i] }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
                 {{ form.submit }}
-            <button type="button" class="btn btn-default" id="send">Submit</button>
+                <button type="button" class="btn btn-default" id="send">Submit</button>
             </form>
         </div>
     </div>
-</div> 
+</div>
 
 <script src="/static/js/jquery-3.4.1.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function(){
-      $("#Input").on("keyup", function() {
-        var value = $(this).val().toLowerCase();
-        $("#DocsTable tr").filter(function() {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    $(document).ready(function () {
+        $("#Input").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#DocsTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
         });
-      });
     });
 </script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         var fname;
-        $("#send").click(function(){
+        $("#send").click(function () {
             var checked = $("input[type=checkbox]:checked");
             var resultArray = [];
-            for(v of checked){
+            for (v of checked) {
                 console.log(v)
                 var next_input = $(v).closest("tr");
                 next_input = next_input.find("input[type=text]")
@@ -162,13 +173,16 @@ Something wrong?
             $.ajax({
                 type: 'POST',
                 url: "/check",
-                data: {'data': resultArray},
-                success: function(response) {
+                data: { 'data': resultArray },
+                success: function (response) {
                     if (response.length === 0) {
                         $('#dataIsSafe').removeClass('hidden');
-                        $('#exampleModal').modal('show')
+                        $('#exampleModal').modal('show');
+                    } else {
+                        $('#dataAtRisk').removeClass('hidden');
+                        $('#mBody').html(response);
+                        $('#exampleModal').modal('show');
                     }
-                    $('#exampleModal').modal('show'); 
                     console.log(response);
                 },
             });
@@ -176,4 +190,3 @@ Something wrong?
     });
 </script>
 {% endblock %}
-
