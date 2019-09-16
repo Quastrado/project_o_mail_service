@@ -1,11 +1,8 @@
 from datetime import datetime
-
 from flask import current_app as app
 from flask import flash, redirect, render_template, request, jsonify, session, url_for
 from flask_login import login_user, logout_user
-
 from owl_mail.check import Check
-
 from owl_mail.forms import CheckForm, LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml

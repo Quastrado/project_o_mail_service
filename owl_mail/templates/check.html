@@ -69,7 +69,7 @@ Something wrong?
                 </div>
                 <div id="dataAtRisk" class="hidden">
                     <p>Violations of authenticity in the following documents:</p>
-                    <ul>
+                    <ul id="list">
                         {% for element in response %}
                         <li>{{ element }}</li>>
                         {% endfor %}
@@ -107,7 +107,7 @@ Something wrong?
             <h3>Documents</h3>
             <hr>
             <form id="form-id" action="" method="POST">
-
+                {{ form.hidden_tag() }}
                 <div class="table-wrapper">
                     <input class="form-control" id="Input" type="text" placeholder="Search">
                     <br>
@@ -180,7 +180,7 @@ Something wrong?
                         $('#exampleModal').modal('show');
                     } else {
                         $('#dataAtRisk').removeClass('hidden');
-                        $('#mBody').html(response);
+                        $('#list').html(response);
                         $('#exampleModal').modal('show');
                     }
                     console.log(response);
