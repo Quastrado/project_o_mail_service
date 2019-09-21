@@ -27,7 +27,7 @@ def process_login():  # need import User, db / redirect, flash, url_for ???
     if form.validate_on_submit():
         user = User.query.filter(User.username == form.username.data).first()
         if user and user.check_password(form.password.data):
-            login_user(user)
+            login_user(user, remember=form.remember_me.data)
             return redirect(url_for('menu'))
 
     flash('Invalid username or password')

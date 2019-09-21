@@ -7,6 +7,9 @@
 body {
     background-color: #212529;
 }
+label {
+    color: white;
+}
 </style>
 {% endblock %}
 
@@ -41,6 +44,10 @@ Who are you?
             </div>
             <div class="form-group col-md-6">
                 {{ wtf.form_field(form.password) }}
+            </div>
+            <div class="form-group col-md-12">
+                {{ form.remember_me() }}
+                {{ form.remember_me.label(class_='form-check-label') }}
             </div>
             <div class="text-center">
                 <div class="btn btn-dark">
