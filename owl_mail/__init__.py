@@ -1,6 +1,7 @@
 from flask import Flask, flash, redirect, url_for
 from flask_bootstrap import Bootstrap
 from flask_login import LoginManager, login_user, logout_user
+from flask_migrate import Migrate
 from owl_mail.models import db, User
 
 def create_app(test_config = False):
@@ -11,6 +12,7 @@ def create_app(test_config = False):
     else:
         app.config.from_object('config.BaseConfig')
         db.init_app(app)
+        migrate = Migrate(app, db)
         login_manager = LoginManager()
         login_manager.init_app(app)
         login_manager.login_view = 'login'
