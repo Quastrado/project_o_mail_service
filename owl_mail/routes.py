@@ -149,11 +149,6 @@ def check():
             Failed to get information about stored files
             """)
     
-    # if request.method == 'POST':
-    #     values_list = request.form.getlist('data[]')
-    #     files = inst_check.hash_compare(values_list)
-    #     return jsonify(files)
-
     return render_template('check.html', form = form, 
                                         id_list = id_list,
                                         name_list = name_list,
@@ -161,7 +156,7 @@ def check():
                                         count = count)
 
 
-@app.route('/check_data', methods=['POST'])
+@app.route('/check_option', methods=['POST'])
 def check_option():
     form = CheckForm()
     inst_check = Check()
@@ -169,3 +164,13 @@ def check_option():
         values_list = request.form.getlist('data[]')
         files = inst_check.hash_compare(values_list)
         return jsonify(files)
+
+
+@app.route('/delete_option', methods=['POST'])
+def delete_option():
+    form = CheckForm()
+    inst_check = Check()
+    if request.method == 'POST':
+        values_list = request.form.getlist('data[]')
+        deleted_docs = inst_check.delete_docs(values_list)
+        return jsonify(deleted_docs)

@@ -75,6 +75,14 @@ Something wrong?
                         {% endfor %}
                     </ul>
                 </div>
+                <div id="dataDeleted" class="hidden">
+                    <p>The following files have been deleted:</p>
+                    <ul id="list">
+                        {% for element in response %}
+                        <li>{{ element }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -138,8 +146,8 @@ Something wrong?
                     </table>
                 </div>
                 <div class="btn-group" role="group" aria-label="MyGroup">
-                    <button type="button" class="btn btn-default" name="check_data" value="chk" id="send">Check</button>
-                    <button type="button" class="btn btn-default" name="delete_data" id="delete">Delete</button>
+                    <button type="button" class="btn btn-default" id="send">Check</button>
+                    <button type="button" class="btn btn-default" id="delete">Delete</button>
                 </div>
             </form>
         </div>
@@ -174,7 +182,7 @@ Something wrong?
 
             $.ajax({
                 type: 'POST',
-                url: "/check_data",
+                url: "/check_option",
                 data: { 'data': resultArray },
                 success: function (response) {
                     if (response.length === 0) {
@@ -182,6 +190,34 @@ Something wrong?
                         $('#exampleModal').modal('show');
                     } else {
                         $('#dataAtRisk').removeClass('hidden');
+                        $('#list').html(response);
+                        $('#exampleModal').modal('show');
+                    }
+                    console.log(response);
+                },
+            });
+        });
+    });
+</script>
+<script>
+    $(document).ready(function () {
+        var fname;
+        $("#delete").click(function () {
+            var checked = $("input[type=checkbox]:checked");
+            var resultArray = [];
+            for (v of checked) {
+                console.log(v)
+                var next_input = $(v).closest("tr");
+                next_input = next_input.find("input[type=text]")
+                resultArray.push(next_input.val()) 
+            }
+            $.ajax({
+                type: 'POST',
+                url: "/delete_option",
+                data: { 'data': resultArray },
+                success: function (response) {
+                    if (response.length != 0) {
+                        $('#dataDeleted').removeClass('hidden');
                         $('#list').html(response);
                         $('#exampleModal').modal('show');
                     }

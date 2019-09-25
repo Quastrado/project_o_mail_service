@@ -57,5 +57,15 @@ class Check:
         
         return discrepancies
 
-    def delete_docs(self, *args):
-        pass
+    
+    def delete_docs(self, values_list):
+        deleted_docs = []
+        for value in values_list:
+            file_name = '{}.xml'.format(value)
+            self.s3.delete_object(
+                Bucket=BaseConfig.AWS_BUCKET_NAME,
+                Key=file_name 
+            )
+            deleted_docs.append(file_name)
+
+        return deleted_docs
