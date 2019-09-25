@@ -149,13 +149,23 @@ def check():
             Failed to get information about stored files
             """)
     
-    if request.method == 'POST':
-        values_list = request.form.getlist('data[]')
-        files = inst_check.hash_compare(values_list)
-        return jsonify(files)
+    # if request.method == 'POST':
+    #     values_list = request.form.getlist('data[]')
+    #     files = inst_check.hash_compare(values_list)
+    #     return jsonify(files)
 
     return render_template('check.html', form = form, 
                                         id_list = id_list,
                                         name_list = name_list,
                                         date_of_creation_list = date_of_creation_list,
                                         count = count)
+
+
+@app.route('/check_data', methods=['POST'])
+def check_option():
+    form = CheckForm()
+    inst_check = Check()
+    if request.method == 'POST':
+        values_list = request.form.getlist('data[]')
+        files = inst_check.hash_compare(values_list)
+        return jsonify(files)

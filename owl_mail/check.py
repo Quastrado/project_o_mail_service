@@ -56,3 +56,6 @@ class Check:
                 discrepancies.append(file_name)
         
         return discrepancies
+
+    def delete_docs(self, *args):
+        pass

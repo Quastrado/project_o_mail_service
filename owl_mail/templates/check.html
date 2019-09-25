@@ -137,8 +137,10 @@ Something wrong?
                         </tbody>
                     </table>
                 </div>
-                {{ form.submit }}
-                <button type="button" class="btn btn-default" id="send">Submit</button>
+                <div class="btn-group" role="group" aria-label="MyGroup">
+                    <button type="button" class="btn btn-default" name="check_data" value="chk" id="send">Check</button>
+                    <button type="button" class="btn btn-default" name="delete_data" id="delete">Delete</button>
+                </div>
             </form>
         </div>
     </div>
@@ -172,7 +174,7 @@ Something wrong?
 
             $.ajax({
                 type: 'POST',
-                url: "/check",
+                url: "/check_data",
                 data: { 'data': resultArray },
                 success: function (response) {
                     if (response.length === 0) {
