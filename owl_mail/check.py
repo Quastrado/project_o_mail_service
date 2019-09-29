@@ -67,5 +67,8 @@ class Check:
                 Key=file_name 
             )
             deleted_docs.append(file_name)
+            db.session.query(Docs).filter(Docs.id==value).delete()
+            db.session.commit()
+            deleted_docs.append(value)
 
         return deleted_docs

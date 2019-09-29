@@ -187,9 +187,11 @@ Something wrong?
                 success: function (response) {
                     if (response.length === 0) {
                         $('#dataIsSafe').removeClass('hidden');
+                        $('#dataAtRisk').addClass('hidden');
                         $('#exampleModal').modal('show');
                     } else {
                         $('#dataAtRisk').removeClass('hidden');
+                        $('#dataIsSafe').addClass('hidden');
                         $('#list').html(response);
                         $('#exampleModal').modal('show');
                     }
