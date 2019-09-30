@@ -42,6 +42,7 @@ class ContentForm(FlaskForm):
     
 
 class FinishForm(FlaskForm):
+    write_another = SubmitField('Write another', render_kw={"class": "btn btn-light"})
     menu = SubmitField('Menu', render_kw={"class": "btn btn-light"})
     logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})
 

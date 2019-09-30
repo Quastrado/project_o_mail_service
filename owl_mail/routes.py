@@ -117,7 +117,9 @@ def stamp():
 @app.route('/finish', methods=['GET', 'POST'])
 def finish():
     form = FinishForm()
-    if form.menu.data:
+    if form.write_another.data:
+        return redirect(url_for('form_post'))
+    elif form.menu.data:
         return redirect(url_for('menu'))
     elif form.logout.data:
         return redirect(url_for('logout'))

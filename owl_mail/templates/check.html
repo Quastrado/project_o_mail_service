@@ -77,7 +77,7 @@ Something wrong?
                 </div>
                 <div id="dataDeleted" class="hidden">
                     <p>The following files have been deleted:</p>
-                    <ul id="list">
+                    <ul id="delList">
                         {% for element in response %}
                         <li>{{ element }}</li>
                         {% endfor %}
@@ -219,8 +219,10 @@ Something wrong?
                 data: { 'data': resultArray },
                 success: function (response) {
                     if (response.length != 0) {
+                        $('#dataIsSafe').addClass('hidden');
+                        $('#dataAtRisk').addClass('hidden');
                         $('#dataDeleted').removeClass('hidden');
-                        $('#list').html(response);
+                        $('#delList').html(response);
                         $('#exampleModal').modal('show');
                     }
                     console.log(response);
