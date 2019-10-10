@@ -3,14 +3,7 @@
 
 {% block styles %}
 {{super()}}
-<style>
-body {
-    background-color: #212529;
-}
-label {
-    color: white;
-}
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 {% endblock %}
 
 {% block title %}
@@ -50,9 +43,7 @@ Who are you?
                 {{ form.remember_me.label(class_='form-check-label') }}
             </div>
             <div class="text-center">
-                <div class="btn btn-dark">
-                    {{ wtf.form_field(form.submit) }}
-                </div>
+                {{ form.submit(class_ = 'btn btn-light') }}
             </div>
         </form>
     </div>

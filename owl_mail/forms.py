@@ -6,7 +6,7 @@ class LoginForm(FlaskForm):
     username = StringField('', validators=[DataRequired()], render_kw={'placeholder': 'Login'})
     password = PasswordField('', validators=[DataRequired()], render_kw={'placeholder': 'Password'})
     remember_me = BooleanField('Remember me', default=True, render_kw={"class": "form-check-input"})
-    submit = SubmitField('Login', render_kw={"class": "btn btn-dark"})
+    submit = SubmitField('Login', render_kw={"class": "btn btn-light"})
 
 class StudentForm(FlaskForm):
     name = StringField('', validators=[DataRequired()], render_kw={'placeholder':'Name'})
