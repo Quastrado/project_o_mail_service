@@ -3,16 +3,8 @@
 
 {% block styles %}
 {{super()}}
-  <link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
-<style>
-body {
-  background-color: #212529;
-}
-img {width: 50%; margin: auto;}
-#carouselExampleControls {
-  margin-top: 5%;
-}
-</style>
+<link rel="stylesheet" href="{{url_for('.static', filename='css/bootstrap.min.css')}}">
+<link rel="stylesheet" href="{{url_for('.static', filename='css/menu.css')}}">
 {% endblock %}
 
 {% block title %}

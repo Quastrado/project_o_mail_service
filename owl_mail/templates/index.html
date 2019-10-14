@@ -3,11 +3,7 @@
 
 {% block styles %}
 {{super()}}
-<style>
-body {
-    background-color: #212529;
-}
-</style>
+<link rel="stylesheet" href="{{url_for('.static', filename='css/index.css')}}">
 {% endblock %}
 
 {% block title %}
