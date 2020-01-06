@@ -1,5 +1,6 @@
-$(document).ready(function () {
+$(document).ready(function () {   
     $("#Input").on("keyup", function () {
+        // for Search function
         var value = $(this).val().toLowerCase();
         $("#DocsTable tr").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
@@ -8,6 +9,7 @@ $(document).ready(function () {
 });
 
 $('#select_all').click(function() {
+    // for Select All function
     var checkboxes = $('input[type=checkbox]');
     checkboxes.prop('checked', true);
 })
@@ -31,11 +33,13 @@ $(document).ready(function () {
             data: { 'data': resultArray },
             success: function (response) {
                 if (response.length === 0) {
+                    $('#dataDeleted').addClass('hidden');
                     $('#dataIsSafe').removeClass('hidden');
                     $('#dataAtRisk').addClass('hidden');
                     $('#exampleModal').modal('show');
                 } else {
-                    $('#dataAtRisk').removeClass('hidden');
+                    $('#dataDeleted').addClass('hidden');
+                    $('#dataAtRisk').addClass('hidden');
                     $('#dataIsSafe').addClass('hidden');
                     $('#list').html(response);
                     $('#exampleModal').modal('show');
@@ -74,6 +78,7 @@ $(document).ready(function () {
                         number = (i + 1).toString();
                         $(this).text(number);
                     });
+                    $('#exampleModal').remove();
                     $('#dataIsSafe').addClass('hidden');
                     $('#dataAtRisk').addClass('hidden');
                     $('#dataDeleted').removeClass('hidden');

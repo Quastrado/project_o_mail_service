@@ -3,10 +3,12 @@ from flask import current_app as app
 from flask import flash, redirect, render_template, request, jsonify, session, url_for
 from flask_login import login_user, logout_user
 from owl_mail.check import Check
-from owl_mail.forms import CheckForm, LoginForm, StudentForm, ContentForm, FinishForm
+from owl_mail.forms import CheckForm, CheckTableForm, LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
 import owl_mail.save_data as SD
+
+from wtforms import FieldList, FormField
 
 
 @app.route('/')
@@ -130,12 +132,23 @@ def finish():
 @app.route('/check', methods=['GET', 'POST'])
 def check():
     inst_check = Check()
-    form = CheckForm()    
-    id_list = [str(val) for val, in db.session.query(Docs.id).all()]
-    name_list = [val for val, in db.session.query(Docs.name).all()]
-    date_of_creation_list = [val.strftime('%d-%m-%Y') for val, in 
-                            db.session.query(Docs.date_of_creation)]
-    count = db.session.query(Docs).count()
+    data_list = db.session.query(Docs.id, Docs.name, Docs.date_of_creation).all()
+    print(data_list)
+    # id_list = [str(val) for val, in db.session.query(Docs.id).all()]
+    # name_list = [val for val, in db.session.query(Docs.name).all()]
+    # date_of_creation_list = [val.strftime('%d-%m-%Y') for val, in 
+    #                         db.session.query(Docs.date_of_creation)]
+    # count = db.session.query(Docs).count()
+    
+    form = CheckTableForm()
+    name_list = []
+    date_of_creation_list = []
+    for file_id, name, date in data_list:
+        file_form = CheckForm()
+        file_form.file_name = str(file_id)
+        form.files.append_entry(file_form)
+        name_list.append(name)
+        date_of_creation_list.append(date.strftime('%d-%m-%Y'))
     
     try:
         if inst_check.files_count_discrepancy() == True or inst_check.file_names_discrepancy() == True:
@@ -152,10 +165,8 @@ def check():
             """)
     
     return render_template('check.html', form = form, 
-                                        id_list = id_list,
                                         name_list = name_list,
-                                        date_of_creation_list = date_of_creation_list,
-                                        count = count)
+                                        date_of_creation_list = date_of_creation_list)
 
 
 @app.route('/check_option', methods=['POST'])

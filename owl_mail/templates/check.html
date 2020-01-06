@@ -89,19 +89,19 @@ Something wrong?
                             </tr>
                         </thead>
                         <tbody id="DocsTable">
-                            {% for i in range(0, count) %}
-                            <tr id="row_{{ i }}">
+                            {% for subform in form.files %}
+                            <tr id="row_{{ loop.index - 1 }}">
                                 <td>
                                     <label class="custom-control-input" for="DocsTable">
                                         {{ loop.index }}
                                     </label>
-                                    {{ form.checkbox(type="checkbox", id="checkbox") }}
+                                    {{ subform.checkbox }}
                                 </td>
                                 <td>
-                                    {{ form.file_name(type="text", id="fileName_id_list[i]", value=id_list[i]) }}
+                                    {{ subform.file_name }}
                                 </td>
-                                <td>{{ name_list[i] }}</td>
-                                <td>{{ date_of_creation_list[i] }}</td>
+                                <td>{{ name_list[loop.index - 1] }}</td>
+                                <td>{{ date_of_creation_list[loop.index - 1] }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>
