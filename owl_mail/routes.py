@@ -133,20 +133,16 @@ def finish():
 def check():
     inst_check = Check()
     data_list = db.session.query(Docs.id, Docs.name, Docs.date_of_creation).all()
-    print(data_list)
-    # id_list = [str(val) for val, in db.session.query(Docs.id).all()]
-    # name_list = [val for val, in db.session.query(Docs.name).all()]
-    # date_of_creation_list = [val.strftime('%d-%m-%Y') for val, in 
-    #                         db.session.query(Docs.date_of_creation)]
-    # count = db.session.query(Docs).count()
-    
     form = CheckTableForm()
     name_list = []
     date_of_creation_list = []
     for file_id, name, date in data_list:
         file_form = CheckForm()
-        file_form.file_name = str(file_id)
+        file_form.checkbox = False
         form.files.append_entry(file_form)
+        file_form.file_name = str(file_id)
+        print(str(file_id))
+        print(file_form.file_name)
         name_list.append(name)
         date_of_creation_list.append(date.strftime('%d-%m-%Y'))
     

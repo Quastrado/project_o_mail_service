@@ -48,10 +48,10 @@ class FinishForm(FlaskForm):
 
 
 class CheckForm(FlaskForm):
-    checkbox = BooleanField()
+    checkbox = BooleanField(default=False)
     file_name = StringField(validators=[DataRequired()], render_kw={'readonly': True})
 
 
 class CheckTableForm(FlaskForm):
     files = FieldList(FormField(CheckForm), min_entries=0)
-        
+    
