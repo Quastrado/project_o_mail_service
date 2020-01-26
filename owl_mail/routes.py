@@ -46,6 +46,10 @@ def logout():  # need import flash, redirect, url_for / logout_user
 def menu():
     return render_template('menu.html')
 
+@app.route('/back_to_menu')
+def back_to_menu():
+    return render_template('back_to_menu.html')
+
 @app.route('/form_post', methods=['GET', 'POST'])
 def form_post():
     form = StudentForm()
