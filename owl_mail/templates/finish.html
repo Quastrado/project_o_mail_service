@@ -30,13 +30,15 @@ Done!
                 <div class="text-center">
                    <div class="btn-group" role="group" aria-label="FinishGroup">
                     {{ wtf.form_field(form.write_another) }}
-                    {{ wtf.form_field(form.menu) }}
                     {{ wtf.form_field(form.logout) }}
                    </div> 
                 </div>
             </div>        
         </div> 
-    </form>>
+    </form>
+    <div id="menu">
+        {% include "back_to_menu.html" %}
+    </div>
 </div>
 {% endblock %}
 
