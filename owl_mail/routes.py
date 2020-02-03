@@ -6,6 +6,7 @@ from owl_mail.check import Check
 from owl_mail.forms import CheckForm, CheckTableForm, LoginForm, StudentForm, ContentForm, FinishForm
 from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
+from owl_mail.views.back_to_menu import Menu
 import owl_mail.save_data as SD
 
 from wtforms import FieldList, FormField
@@ -48,7 +49,9 @@ def menu():
 
 @app.route('/back_to_menu')
 def back_to_menu():
-    return render_template('back_to_menu.html')
+    menu = Menu()
+    return menu.back('menu')
+
 
 @app.route('/form_post', methods=['GET', 'POST'])
 def form_post():
