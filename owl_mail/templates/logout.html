@@ -1,0 +1,14 @@
+{% extends "bootstrap/base.html" %}
+
+{% block styles %}
+{{super()}}
+<link rel="stylesheet" href="{{url_for('.static', filename='css/logout.css')}}">
+{% endblock %}
+
+{% block content %}
+<div class="topright">
+    <a href ="{{ url_for('logout') }}">
+        <h1 style="color: white;">&times;</h1>
+    </a>
+</div>
+{% endblock %}

@@ -1,6 +1,6 @@
 from flask import Flask, flash, redirect, url_for
 from flask_bootstrap import Bootstrap
-from flask_login import LoginManager, login_user, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user
 from flask_migrate import Migrate
 from owl_mail.models import db, User
 

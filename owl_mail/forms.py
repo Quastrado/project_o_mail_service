@@ -25,7 +25,7 @@ class StudentForm(FlaskForm):
         ],
         validators=[DataRequired()]
         )
-    menu = SubmitField('Menu')
+    # menu = SubmitField('Menu')
     submit = SubmitField('Submit')
     
 
@@ -37,14 +37,14 @@ class ContentForm(FlaskForm):
     address = StringField('Address:', render_kw={'readonly': True})
     subaddress = StringField('Subaddress:', render_kw={'readonly': True})
     owl = StringField('Deliveryman:', render_kw={'readonly': True})
-    to_fix = SubmitField('To fix')
+    # to_fix = SubmitField('To fix')
     submit = SubmitField('Subscribe')
     
 
-class FinishForm(FlaskForm):
-    write_another = SubmitField('Write another', render_kw={"class": "btn btn-light"})
-    menu = SubmitField('Menu', render_kw={"class": "btn btn-light"})
-    logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})
+# class FinishForm(FlaskForm):
+#     write_another = SubmitField('Write another', render_kw={"class": "btn btn-light"})
+#     menu = SubmitField('Menu', render_kw={"class": "btn btn-light"})
+#     logout = SubmitField('Logout', render_kw={"class": "btn btn-light"})
 
 
 class CheckForm(FlaskForm):

@@ -11,7 +11,7 @@ What do we write?
 {% endblock %}
 
 {% block content %}
-
+{% include "logout.html" %}
 <div class="container h-100"> 
     <div class="row">
         <div class="col-md-12">
@@ -19,18 +19,7 @@ What do we write?
         </div>
     </div>
     <div class="h-100 justify-content-center align-items-center">   
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                {% for message in messages %}
-                    <div class="alert alert-info alert-dismissible" role="alert">
-                        <button type="button" class="close" data-dismiss="alert">
-                            <span aria-hidden="true">&times;</span>
-                        </button>         
-                        {{ message }}<br>
-                    </div>
-                {% endfor %}
-            {% endif %}
-        {% endwith %}
+        {% include "alerts.html" %}
         <form action="" method="POST" novalidate class="col-12">
             {{ form.hidden_tag() }}
             <div class="form-row">
@@ -71,7 +60,9 @@ What do we write?
             <div class="row">
                 <div class="col-md-12">
                     <div class="text-center">
-                        {{ wtf.form_field(form.menu) }}
+                        <button type="button" class="btn btn-dark">
+                            <a href="{{url_for('menu')}}">Menu</a>
+                        </button>
                         {{ wtf.form_field(form.submit) }}
                     </div>
                 </div>
@@ -79,6 +70,7 @@ What do we write?
         </form>
     </div>
 </div>
+{% include "back_to_menu.html" %}
 {% endblock %}
         
            

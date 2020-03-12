@@ -12,6 +12,20 @@ What do you want?
 {% endblock %}
 
 {% block content %}
+{% include "logout.html" %}
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+  {% include "slider.html" %}
+  {% include "slider.html" %}
+  {% include "slider.html" %}
+</div>
+
+<div id="main">
+  <button class="openbtn" onclick="openNav()">☰</button>  
+  <h2>Collapsed Sidebar</h2>
+  <p>Click on the hamburger menu/bar icon to open the sidebar, and push this content to the right.</p>
+</div>
+
 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
   <div class="carousel-inner text-center">
     <div class="carousel-item active">
@@ -39,4 +53,6 @@ What do you want?
 
 <script src="/static/js/jquery-3.4.1.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
+<script src="/static/js/menu.js"></script>
+<script src="/static/js/slider.js"></script>
 {% endblock %}

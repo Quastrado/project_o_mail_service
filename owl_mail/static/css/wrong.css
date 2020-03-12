@@ -1,0 +1,38 @@
+body {
+    background-color: #212529;
+    min-height: 250px;
+}
+
+section {
+    min-height: 100vh;
+}
+
+.section-center__full {
+    min-height: 250px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+/* .container2 {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    position: fixed;
+    align-items: center;
+    justify-content: center;
+  } */
+  
+/* .container {
+    height: 10em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container h1{
+    margin: 0
+} */

@@ -1,5 +1,4 @@
 {% extends "bootstrap/base.html" %}
-{% import "bootstrap/wtf.html" as wtf %}
 
 {% block styles %}
 {{super()}}
@@ -11,6 +10,7 @@ Done!
 {% endblock %}
 
 {% block content %}
+{% include "logout.html" %}
 <div class="container h-100">
     <div class="row">
         <div class="col-md-12">
@@ -24,21 +24,21 @@ Done!
     <br>
     <br>
     <br>
-    <form action="", method="POST">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="text-center">
-                   <div class="btn-group" role="group" aria-label="FinishGroup">
-                    {{ wtf.form_field(form.write_another) }}
-                    {{ wtf.form_field(form.logout) }}
-                   </div> 
-                </div>
-            </div>        
-        </div> 
-    </form>
-    <div id="menu">
-        {% include "back_to_menu.html" %}
-    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="text-center">
+                <div class="btn-group" role="group" aria-label="FinishGroup">
+                    <button type="button" class="btn btn-dark">
+                        <a href="{{url_for('form_post')}}">Write another</a>
+                    </button>
+                    <button type="button" class="btn btn-dark">
+                        <a href="{{url_for('logout')}}">Logout</a>
+                    </button>
+                </div> 
+            </div>
+        </div>        
+    </div> 
 </div>
+{% include "back_to_menu.html" %}
 {% endblock %}
 
