@@ -16,17 +16,16 @@ from wtforms import FieldList, FormField
 
 @app.route('/')
 def start():
-    write_states = {
-        'spelling': False,
-        'view': False
-    }
-    session['write_states'] = write_states
-    print(f'session at start:/n{session}' )
     return redirect(url_for('login'))  # here maust be 'login'
 
 
 @app.route('/login')
 def login():
+    write_states = {
+        'spelling': False,
+        'view': False
+    }
+    session['write_states'] = write_states
     title = "Who are you?"
     login_form = LoginForm()
     return render_template('login.html', page_title=title, form=login_form)
