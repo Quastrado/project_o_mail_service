@@ -7,6 +7,7 @@ from owl_mail.forms import CheckForm, CheckTableForm, LoginForm, StudentForm, Co
 from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
 from owl_mail.views.back_to_menu import Menu
+from owl_mail.views.form_post import form_post_processing
 from owl_mail.views.slider import Slider
 import owl_mail.save_data as SD
 
@@ -75,39 +76,17 @@ def back_to_menu():
     return menu.back('menu')
 
 
-@app.route('/form_post', methods=['GET', 'POST'])
+@app.route('/form_post', methods=['POST'])
 @login_required
 def form_post():
-    states = session['write_states']
+    return form_post_processing()
+
+
+@app.route('/form_post', methods=['GET'])
+@login_required
+def form_get():
     form = StudentForm()
-    if request.method == 'POST':
-        if form.validate_on_submit():
-            exists = db.session.query(Docs.id).filter(Docs.email == form.email.data).scalar()
-            if exists is not None:
-                flash('Specified email already exists')
-                form.email.data = ''
-            else:
-                content_dict = {
-                    'Name':  form.name.data,
-                    'Surname': form.surname.data,
-                    'Email': form.email.data,
-                    'Date_of_birth': form.date_of_birth.data,
-                    'Address': '{}; {}; {}'.format(
-                        form.house_number_and_street.data,
-                        form.area.data,
-                        form.locality.data
-                    ),
-                    'Subaddress': form.subaddress.data,
-                    'Owl': form.owl.data,
-                    'Date_of_creation': ''
-                }
-                session['content'] = content_dict
-                states['spelling'] = True
-                session['write_states'] = states
-                return redirect(url_for('stamp'))
-
-    return render_template('index.html', form=form)  # form=form
-
+    return render_template('index.html', form=form)
 
 @app.route('/stamp', methods=['GET', 'POST'])
 @login_required
