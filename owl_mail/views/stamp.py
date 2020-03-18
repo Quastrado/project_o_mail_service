@@ -5,7 +5,7 @@ from xml.etree import ElementTree as ET
 
 import boto3
 from botocore.exceptions import NoCredentialsError, EndpointConnectionError
-from flask import redirect, render_template, session, url_for
+from flask import flash, redirect, render_template, session, url_for
 
 from config import BaseConfig
 from owl_mail.forms import ContentForm
@@ -60,7 +60,7 @@ class Stamp():
         db.session.commit()
         os.remove(file_id)
 
-form.owl.data
+
     def stamp_processing(self):
         states = session['write_states']
         if not states['spelling']:
@@ -83,16 +83,16 @@ form.owl.data
         form.owl.data = content_dict['Owl']
         img = owls[form.owl.data]
             
-        if not form.validate_on_submit():
-            return render_template('show_data.html', form=form, img=img)
-            
-        try:
-            self.save_data(content_dict)
-            states['views'] = True
-            session['write_states'] = states
-            return redirect(url_for('finish'))
-        except Exception:
-            flash(
-            'Something went wrong in working with the s3 service.'
-            'The document was not saved'
-            )
+        if form.submit.data:
+            try:
+                self.save_data(content_dict)
+                states['view'] = True
+                session['write_states'] = states
+                print(session)
+                return redirect(url_for('finish'))
+            except Exception:
+                flash(
+                'Something went wrong in working with the s3 service.'
+                'The document was not saved'
+                )
+        return render_template('show_data.html', form=form, img=img)

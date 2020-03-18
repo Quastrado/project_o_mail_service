@@ -88,25 +88,11 @@ def form_get():
     form = StudentForm()
     return render_template('index.html', form=form)
 
-@app.route('/stamp', methods=['POST'])
+@app.route('/stamp', methods=['GET', 'POST'])
 @login_required
 def stamp_post():
     stamp = Stamp()
-    return stamp.stamp_processing
-
-@app.route('/stamp', methods=['GET'])
-@login_required
-def stamp_get():
-    form = ContentForm()
-    content_dict = session['content']
-    owls = {
-            'Eared Owl': '/static/eared-owl.jpg',
-            'White Owl': '/static/white-owl.jpg',
-            'Barn Owl': '/static/barn-owl.jpg',
-            'Tawny Owl': '/static/tawny-owl.jpg'
-        }
-    img = owls[content_dict['Owl']]
-    return render_template('show_data.html', form=form, img=img)
+    return stamp.stamp_processing()
 
 # @app.route('/stamp', methods=['GET', 'POST'])
 # @login_required
