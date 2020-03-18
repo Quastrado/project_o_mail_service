@@ -3,6 +3,7 @@
 /env
 owl_mail/__pycache__
 test/__pycache__
+*__pycache__
 owl_mail/other
 config.py 
 psql_config

@@ -8,6 +8,7 @@ from owl_mail.models import db, User, Docs
 from owl_mail.save_data import to_xml
 from owl_mail.views.back_to_menu import Menu
 from owl_mail.views.form_post import form_post_processing
+from owl_mail.views.stamp import Stamp
 from owl_mail.views.slider import Slider
 import owl_mail.save_data as SD
 
@@ -87,46 +88,66 @@ def form_get():
     form = StudentForm()
     return render_template('index.html', form=form)
 
-@app.route('/stamp', methods=['GET', 'POST'])
+@app.route('/stamp', methods=['POST'])
 @login_required
-def stamp():
-    states = session['write_states']
-    if states['spelling']:
-        form = ContentForm()
-        c_dict = session['content']
-        owls = {
+def stamp_post():
+    stamp = Stamp()
+    return stamp.stamp_processing
+
+@app.route('/stamp', methods=['GET'])
+@login_required
+def stamp_get():
+    form = ContentForm()
+    content_dict = session['content']
+    owls = {
             'Eared Owl': '/static/eared-owl.jpg',
             'White Owl': '/static/white-owl.jpg',
             'Barn Owl': '/static/barn-owl.jpg',
             'Tawny Owl': '/static/tawny-owl.jpg'
         }
+    img = owls[content_dict['Owl']]
+    return render_template('show_data.html', form=form, img=img)
 
-        form.name.data = c_dict['Name']
-        form.surname.data = c_dict['Surname']
-        form.email.data = c_dict['Email']
-        form.date_of_birth.data = c_dict['Date_of_birth']
-        form.address.data = c_dict['Address']
-        form.subaddress.data = c_dict['Subaddress']
-        form.owl.data = c_dict['Owl']
-        img = owls[form.owl.data]
+# @app.route('/stamp', methods=['GET', 'POST'])
+# @login_required
+# def stamp():
+#     states = session['write_states']
+#     if states['spelling']:
+#         form = ContentForm()
+#         c_dict = session['content']
+#         owls = {
+#             'Eared Owl': '/static/eared-owl.jpg',
+#             'White Owl': '/static/white-owl.jpg',
+#             'Barn Owl': '/static/barn-owl.jpg',
+#             'Tawny Owl': '/static/tawny-owl.jpg'
+#         }
 
-        # if form.to_fix.data:
-        #     return redirect(url_for('form_post'))
-        # elif form.submit.data:
-        if form.validate_on_submit():
-            try:
-                SD.execute_save(c_dict)
-                states['view'] = True
-                session['write_states'] = states
-                return redirect(url_for('finish'))
-            except Exception:
-                flash(
-                    'Something went wrong in working with the s3 service.'
-                    'The document was not saved'
-                    )
-        return render_template('show_data.html', form=form, img=img)
-    else:
-        return redirect(url_for('wrong'))
+#         form.name.data = c_dict['Name']
+#         form.surname.data = c_dict['Surname']
+#         form.email.data = c_dict['Email']
+#         form.date_of_birth.data = c_dict['Date_of_birth']
+#         form.address.data = c_dict['Address']
+#         form.subaddress.data = c_dict['Subaddress']
+#         form.owl.data = c_dict['Owl']
+#         img = owls[form.owl.data]
+
+#         # if form.to_fix.data:
+#         #     return redirect(url_for('form_post'))
+#         # elif form.submit.data:
+#         if form.validate_on_submit():
+#             try:
+#                 SD.execute_save(c_dict)
+#                 states['view'] = True
+#                 session['write_states'] = states
+#                 return redirect(url_for('finish'))
+#             except Exception:
+#                 flash(
+#                     'Something went wrong in working with the s3 service.'
+#                     'The document was not saved'
+#                     )
+#         return render_template('show_data.html', form=form, img=img)
+#     else:
+#         return redirect(url_for('wrong'))
 
 
 @app.route('/finish', methods=['GET', 'POST'])

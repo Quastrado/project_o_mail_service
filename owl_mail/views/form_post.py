@@ -1,4 +1,4 @@
-# Midas, i know you'd like to see a class here
+# Midas, i know you'd like to see a class here,
 # but Even told me it's like to use a cannon on vorobey
 from flask import flash, redirect, render_template, session, url_for
 from owl_mail.forms import StudentForm
@@ -33,4 +33,4 @@ def form_post_processing():
     session['content'] = content_dict
     states['spelling'] = True
     session['write_states'] = states
-    return redirect(url_for('stamp'))
+    return redirect(url_for('stamp_post'))
